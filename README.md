@@ -126,3 +126,6 @@ The best model achieved during the experiments is a CNN+GRU architecture with tr
 - **TensorFlow version**: 2.7.0
 - **Matplotlib version**: 3.5.0
 - **Scikit-learn version**: 0.24.1
+
+## Contact
+Created by [@AnirbanG-git] - feel free to contact me!
