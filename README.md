@@ -116,7 +116,7 @@ Ablation in the code is used to reduce the dataset size for experimental purpose
 
 ## Conclusion
 
-The best model achieved during the experiments is a CNN+GRU architecture with transfer learning, optimized using the Adam optimizer. This model achieved a training accuracy of 0.99 and a validation accuracy of 0.98, demonstrating excellent performance and generalization capability. This model effectively recognizes the five gestures, making it suitable for deployment in smart TVs to enable gesture-based control. Future work could explore further fine-tuning and testing on a larger dataset to ensure robustness across diverse user inputs and environments.
+The best model achieved during the experiments is a CNN+GRU architecture with transfer learning, optimized using the Adam optimizer (model_15.py). This model achieved a training accuracy of 0.99 and a validation accuracy of 0.98, demonstrating excellent performance and generalization capability. This model effectively recognizes the five gestures, making it suitable for deployment in smart TVs to enable gesture-based control. Future work could explore further fine-tuning and testing on a larger dataset to ensure robustness across diverse user inputs and environments.
 
 ## Environment
 
