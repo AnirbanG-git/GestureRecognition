@@ -1,0 +1,42 @@
+from tensorflow.keras.applications import MobileNet
+from tensorflow.keras.layers import Input, TimeDistributed, BatchNormalization, MaxPooling2D, Flatten, GRU, Dense, Dropout
+from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.regularizers import l2
+
+def build_model(input_shape, num_labels, learning_rate):
+    # Define the video input
+    video_input = Input(shape=input_shape)
+    
+    # Define the MobileNet model as a Sequential model
+    cnn = Sequential()
+    cnn.add(MobileNet(weights='imagenet', include_top=False, input_shape=input_shape[1:]))
+    cnn.add(BatchNormalization())
+    cnn.add(MaxPooling2D((2, 2)))
+    cnn.add(Flatten())
+    cnn.add(Dense(128, activation='relu', kernel_regularizer=l2(0.01)))
+    cnn.add(Dropout(0.5))
+    
+    # Apply the CNN base to each frame of the video input
+    encoded_frames = TimeDistributed(cnn)(video_input)
+
+    # GRU layer
+    gru_out = GRU(128)(encoded_frames)
+    dropout1 = Dropout(0.5)(gru_out)
+
+    # Fully connected layers
+    hidden_layer = Dense(128, activation="relu", kernel_regularizer=l2(0.01))(dropout1)
+    dropout2 = Dropout(0.5)(hidden_layer)
+
+    # Output layer
+    outputs = Dense(num_labels, activation="softmax")(dropout2)
+
+    # Create the model
+    model = Model(inputs=video_input, outputs=outputs)
+    
+    optimiser = SGD(learning_rate=learning_rate, momentum=0.9)
+    model.compile(optimizer=optimiser, loss='categorical_crossentropy', metrics=['categorical_accuracy'])
+    
+    print(model.summary())
+
+    return model
